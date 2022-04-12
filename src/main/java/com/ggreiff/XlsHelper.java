@@ -1,8 +1,9 @@
 
 package com.ggreiff;
 
-import com.ggreiff.p6.XlsxActivityExpenses;
-import org.apache.log4j.Logger;
+import com.ggreiff.p6.XlsxResourceSpread;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -18,7 +19,7 @@ import java.util.List;
  */
 public class XlsHelper {
 
-    final static Logger P6logger = Logger.getLogger(XlsHelper.class);
+    final static Logger P6logger =  LogManager.getLogger(XlsHelper.class);
 
     public String XlsName;
 

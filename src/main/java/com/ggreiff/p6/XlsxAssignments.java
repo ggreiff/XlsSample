@@ -5,10 +5,10 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import com.ggreiff.CommandArgs;
+import com.ggreiff.helpers.XlsxActivityCodeHelper;
 import com.ggreiff.helpers.XlsxAssignmentHelper;
 import com.ggreiff.rowdata.AssignmentRow;
 import com.primavera.integration.client.Session;
-import org.apache.log4j.Logger;
 import com.primavera.common.value.Unit;
 import com.primavera.common.value.spread.ResourceAssignmentSpread;
 import com.primavera.common.value.spread.ResourceAssignmentSpreadPeriod;
@@ -23,6 +23,8 @@ import com.primavera.integration.client.bo.object.Resource;
 import com.primavera.integration.client.bo.object.ResourceAssignment;
 import com.primavera.integration.client.bo.object.ResourceAssignmentPeriodActual;
 import com.primavera.integration.util.WhereClauseHelper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Created by ggreiff on 1/23/2015.
@@ -30,7 +32,7 @@ import com.primavera.integration.util.WhereClauseHelper;
  */
 public class XlsxAssignments {
 
-	final static Logger P6logger = Logger.getLogger(XlsxAssignments.class);
+	final static Logger P6logger =  LogManager.getLogger(XlsxAssignments.class);
 
 	public void run(Session session, CommandArgs commandArgs) {
 		P6logger.info("Starting XlsxActivityExpenses");

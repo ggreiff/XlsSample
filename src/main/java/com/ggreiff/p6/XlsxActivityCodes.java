@@ -14,7 +14,8 @@ import com.primavera.integration.client.bo.helper.ActivityCodeHelper;
 import com.primavera.integration.client.bo.helper.ActivityCodeTypeHelper;
 import com.primavera.integration.client.bo.helper.BOHelperMap;
 import com.primavera.integration.client.bo.object.*;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.*;
 import java.util.regex.Pattern;
@@ -25,7 +26,7 @@ import java.util.regex.Pattern;
  */
 public class XlsxActivityCodes {
 
-    final static Logger P6logger = Logger.getLogger(XlsxActivityCodes.class);
+    final static Logger P6logger =  LogManager.getLogger(XlsxActivityCodes.class);
 
     public String debugString = "";
     public String activtyCodeName = "AlperCsi";

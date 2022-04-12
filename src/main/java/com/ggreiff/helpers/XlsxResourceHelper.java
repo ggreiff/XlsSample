@@ -2,7 +2,8 @@ package com.ggreiff.helpers;
 
 import com.ggreiff.CommandArgs;
 import com.ggreiff.rowdata.ResourceRow;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -17,7 +18,7 @@ import java.util.List;
  */
 public class XlsxResourceHelper {
 
-    final static Logger P6logger = Logger.getLogger(XlsxResourceHelper.class);
+    final static Logger P6logger =  LogManager.getLogger(XlsxResourceHelper.class);
 
     public com.ggreiff.CommandArgs CommandArgs;
 

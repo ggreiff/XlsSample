@@ -13,7 +13,8 @@ import com.primavera.integration.client.GlobalObjectManager;
 import com.primavera.integration.client.Session;
 import com.primavera.integration.client.bo.enm.SpreadPeriodType;
 import com.primavera.integration.client.bo.object.*;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -23,7 +24,7 @@ import java.util.*;
 public class XlsxResourceSpread {
 
 
-    private final static Logger P6logger = Logger.getLogger(XlsxResourceSpread.class);
+    final static Logger P6logger =  LogManager.getLogger(XlsxResourceSpread.class);
 
     private EnterpriseLoadManager elm;
     private GlobalObjectManager gob;

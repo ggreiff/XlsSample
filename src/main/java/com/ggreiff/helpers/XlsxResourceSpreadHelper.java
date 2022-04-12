@@ -1,36 +1,34 @@
-
 package com.ggreiff.helpers;
 
 import com.ggreiff.CommandArgs;
-import com.ggreiff.rowdata.AssignmentRow;
-import org.apache.log4j.Logger;
+import com.ggreiff.rowdata.ResourceSpreadRow;
+import com.primavera.common.value.ObjectId;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
-/**
- * Created by ggreiff on 1/23/2015.
- * XlsAssignmentHelper
- */
-public class XlsxAssignmentHelper {
+public class XlsxResourceSpreadHelper {
 
-    final static Logger P6logger = Logger.getLogger(XlsxAssignmentHelper.class);
+    final static Logger P6logger =  LogManager.getLogger(XlsxResourceSpreadHelper.class);
 
     public com.ggreiff.CommandArgs CommandArgs;
 
-    public XlsxAssignmentHelper(CommandArgs commandArgs) {
+    public XlsxResourceSpreadHelper(CommandArgs commandArgs) {
         CommandArgs = commandArgs;
     }
 
-    public List<AssignmentRow> getAssignmentsRows() {
+    public List<ResourceSpreadRow> ResourceSpreadList;
 
-        P6logger.info("Start getAssignmentsRows");
+    public List<ResourceSpreadRow> getResourceSpreadRows() {
 
-        List<AssignmentRow> assignmentList = new ArrayList<>();
+        P6logger.info("Start getResourceSpreadRows");
+
+        ResourceSpreadList = new ArrayList<>();
         try {
             String fileName = XlsxUtilityHelpers.xlsAbsoluteName(getClass().getResource(""), CommandArgs.getXlsxFileName());
             String sheetName = "Sheet1";
@@ -50,20 +48,28 @@ public class XlsxAssignmentHelper {
                 String projectId = row.getCell(0).getStringCellValue().trim();
                 if (projectId.isEmpty()) break;
                 String activityId = row.getCell(1).getStringCellValue().trim();
-                String resourceId = row.getCell(2).getStringCellValue().trim();
-                Double unitDouble = row.getCell(3).getNumericCellValue();
-                String unitType = row.getCell(4).getStringCellValue().trim();
+                String resource =  row.getCell(2).getStringCellValue().trim();
+                String unitType = row.getCell(3).getStringCellValue().trim();
+                Double units = row.getCell(4).getNumericCellValue();
                 Date periodDate = row.getCell(5).getDateCellValue();
-                assignmentList.add(new AssignmentRow(projectId, activityId, resourceId, unitType, unitDouble, periodDate));
+                ResourceSpreadList.add(new ResourceSpreadRow(projectId, activityId, resource, unitType, units, periodDate));
             }
 
             workbook.close();
         } catch (Exception ex) {
             P6logger.error(ex.getMessage());
         }
-        P6logger.info("Finished getAssignmentsRows");
-        return assignmentList;
+
+        P6logger.info("Finish getResourceSpreadRows");
+        return ResourceSpreadList;
+    }
+
+    public Map<String, ObjectId> getUniqueResourceSpreadsByProject(String projectId) {
+        Map<String, ObjectId> retVal = new HashMap<>();
+        for (ResourceSpreadRow resourceSpreadRow : ResourceSpreadList) {
+            if (!resourceSpreadRow.getProjectId().equalsIgnoreCase(projectId)) continue;
+            retVal.put(resourceSpreadRow.getActivityId(), null);
+        }
+        return retVal;
     }
 }
-
-

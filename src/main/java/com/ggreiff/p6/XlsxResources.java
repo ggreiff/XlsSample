@@ -8,7 +8,8 @@ import com.primavera.common.value.ObjectId;
 import com.primavera.integration.client.EnterpriseLoadManager;
 import com.primavera.integration.client.Session;
 import com.primavera.integration.client.bo.object.*;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.Map;
 public class XlsxResources {
 
 
-    final static Logger P6logger = Logger.getLogger(XlsxResources.class);
+    final static Logger P6logger =  LogManager.getLogger(XlsxResources.class);
 
     public void run(Session session, CommandArgs commandArgs) {
 

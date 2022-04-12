@@ -14,7 +14,8 @@ import com.primavera.integration.client.bo.object.Activity;
 import com.primavera.integration.client.bo.object.Project;
 import com.primavera.integration.client.bo.object.UDFType;
 import com.primavera.integration.client.bo.object.UDFValue;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,7 +28,7 @@ public class XlsxUserFieldActivity {
     }
 
 
-    private final static Logger P6logger = Logger.getLogger(XlsxResourceSpread.class);
+    final static Logger P6logger =  LogManager.getLogger(XlsxUserFieldActivity.class);
 
     private EnterpriseLoadManager elm = null;
     private GlobalObjectManager gob = null;

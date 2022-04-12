@@ -1,11 +1,17 @@
 package com.ggreiff;
 
+import com.ggreiff.helpers.XlsxActivityCodeHelper;
 import com.ggreiff.p6.*;
+import org.apache.logging.log4j.Level;
 import com.lexicalscope.jewel.cli.CliFactory;
 import com.primavera.integration.client.RMIURL;
 import com.primavera.integration.client.Session;
 import com.primavera.integration.common.DatabaseInstance;
-import org.apache.log4j.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.config.Configurator;
+import org.apache.logging.log4j.core.config.builder.api.*;
+import org.apache.logging.log4j.core.config.builder.impl.BuiltConfiguration;
 
 /**
  * Created by ggreiff on 4/28/2015.
@@ -13,10 +19,9 @@ import org.apache.log4j.*;
  */
 public class MainProgram {
 
-    final static Logger P6logger = Logger.getLogger(MainProgram.class);
+    final static Logger P6logger =  LogManager.getLogger(MainProgram.class);
 
     public static void main(String[] args) {
-        LogManager.getRootLogger().setLevel(Level.ERROR); // quite the P6 logger
         CommandArgs commandArgs;
         try {
 
@@ -122,38 +127,42 @@ public class MainProgram {
         {
             P6logger.error(ex.getMessage());
         }
-        LogManager.getRootLogger().setLevel(Level.ERROR); // quite the P6 logger
         System.exit(0);
     }
 
     public static void configureLogger(){
 
         //
-        // configure the P6 logger for our use
-        //
-        BasicConfigurator.configure();
-        LogManager.getRootLogger().setLevel(Level.INFO);
-
-        //
         // Configure a console appender and add it to the root logger
         //
-        ConsoleAppender console = new ConsoleAppender(); //create appender
-        //configure the appender
-        String PATTERN = "%d %-5p [%c{1}] %m%n";
-        console.setLayout(new PatternLayout(PATTERN));
-        console.setThreshold(Level.FATAL);
-        console.activateOptions();
-        Logger.getRootLogger().addAppender(console);
+        ConfigurationBuilder<BuiltConfiguration> builder = ConfigurationBuilderFactory.newConfigurationBuilder();
+        AppenderComponentBuilder console = builder.newAppender("stdout", "Console");
+        builder.add(console);
 
         //
         // Configure a file appender and add it to the root logger
         //
-        FileAppender fa = new FileAppender();
-        fa.setName("FileLogger");
-        fa.setFile("XlsSample.log");
-        fa.setAppend(false);
-        fa.setLayout(new PatternLayout(PATTERN));
-        fa.activateOptions();
-        Logger.getRootLogger().addAppender(fa);
+        AppenderComponentBuilder file = builder.newAppender("log", "File");
+        file.addAttribute("fileName", "target/XlsSample.log");
+        builder.add(file);
+
+        //
+        // Setup our log pattern
+        //
+        LayoutComponentBuilder standard = builder.newLayout("PatternLayout");
+        standard.addAttribute("pattern", "%d [%t] %-5level: %msg%n%throwable");
+        console.add(standard);
+        file.add(standard);
+
+        //
+        // Define our root logger
+        //
+        RootLoggerComponentBuilder rootLogger = builder.newRootLogger(Level.ERROR);
+        rootLogger.add(builder.newAppenderRef("stdout"));
+
+        builder.add(rootLogger);
+
+        Configurator.initialize(builder.build());
+
     }
 }

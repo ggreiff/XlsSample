@@ -1,8 +1,10 @@
 package com.ggreiff.utils;
 
+import com.ggreiff.p6.XlsxWbsActivity;
 import com.primavera.common.value.*;
 import com.primavera.integration.client.bo.enm.UDFIndicator;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.usermodel.DateUtil;
 
 import java.time.Instant;
@@ -15,7 +17,7 @@ import java.util.Date;
 @SuppressWarnings({"WeakerAccess", "unused", "ConstantConditions"})
 public class Utils {
 
-    public final static Logger P6logger = Logger.getLogger(Utils.class);
+    final static Logger P6logger =  LogManager.getLogger(Utils.class);
 
     public static Date asDate(LocalDate localDate) {
         return Date.from(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
